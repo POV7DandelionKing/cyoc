@@ -1,0 +1,22 @@
+
+scene:
+  id: basement
+
+  avatars:
+    - dude1
+    - dude2
+    - woman1
+    - woman2
+
+  questions:
+    - question: this is the first question
+      answers:
+        - first response
+        - second response
+        - third response
+
+    - question: this is the second question
+      answers:
+        - first response to second question
+        - second response to second question
+        - third response to second question
