@@ -70,17 +70,25 @@ class SessionView(object):
         question_id = json['question']
         response_id = json['response']
         self.scene.respond(question_id, response_id, self.user)
-        return {'responses': self.scene.responses[question_id]}
+        return self._responses(question_id)
 
-    @view_config(route_name='responses', renderer='json')
+    @view_config(route_name='responses', request_method='POST', renderer='json')
     def responses(self):
         """
         Takes a question id
 
         Responses {user id -> response id}
         """
-        question_id = self.json['question']
-        return {'responses': self.scene.responses[question_id]}
+        json = self.request.json_body
+        question_id = json['question']
+        return self._responses(question_id)
+
+    def _responses(self, question_id):
+        r = []
+        for user_id, response_id in self.scene.responses[question_id].items():
+            options = self.scene.questions[int(question_id)].options[user_id]
+            r = {'user': user_id, 'response':options[int(response_id)]}
+        return {'responses': r}
 
     @view_config(route_name='question', renderer='json')
     def question(self):
@@ -96,7 +104,7 @@ class SessionView(object):
                 'prompt': question.text,
                 'responses': [
                     {'id': str(i), 'text': o}
-                    for i, o in enumerate(question.options)
+                    for i, o in enumerate(question.options[self.user])
                     ]
                 }
             }

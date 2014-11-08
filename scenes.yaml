@@ -3,20 +3,38 @@ scene:
   id: basement
 
   avatars:
-    - dude1
-    - dude2
-    - woman1
-    - woman2
+    - anxious
+    - angry
+    - insecure
 
   questions:
+
     - question: this is the first question
       answers:
-        - f
-        - second response
-        - third response
+        anxious:
+          - first response anx
+          - second response anx
+          - third response anx
+        angry:
+          - first response angy
+          - second response angry
+          - third response angry
+        insecure:
+          - first response i
+          - second response i
+          - third response i
 
     - question: this is the second question
       answers:
-        - first response to second question
-        - second response to second question
-        - third response to second question
+        anxious:
+          - first response anx 2
+          - second response anx 2
+          - third response anx 2
+        angry:
+          - first response angy 2
+          - second response angry 2
+          - third response angry 2
+        insecure:
+          - first response i 2
+          - second response i 2
+          - third response i 2
