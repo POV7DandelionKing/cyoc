@@ -11,7 +11,7 @@ scene:
   questions:
     - question: this is the first question
       answers:
-        - first response
+        - f
         - second response
         - third response
 
