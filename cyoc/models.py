@@ -15,7 +15,6 @@ class Scene(object):
         self.questions = questions
         self.users = []
         self.responses = {q.id: {} for q in questions}
-        self.current = 0
 
     @classmethod
     def from_config(cls, config):
@@ -30,7 +29,12 @@ class Scene(object):
 
     @property
     def current_question(self):
-        return self.questions[self.current]
+        for question in self.questions:
+            # if there aren't answers from all registered users, then
+            # the question is still current
+            if set(self.responses[question.id].keys()) != set(self.users):
+                return question
+        return None
 
     def respond(self, question_id, response_id, user_id):
         self.responses[question_id][user_id] = response_id

@@ -30,3 +30,19 @@ print "/respond"
 data = {'question':'0', 'response':'0'}
 r = requests.post(url + "respond", data=json.dumps(data), headers=headers).json()
 print r
+
+print
+print "/question"
+r = requests.get(url + 'question', headers=headers).json()
+print r
+
+print
+print "/respond"
+data = {'question':'1', 'response':'0'}
+r = requests.post(url + "respond", data=json.dumps(data), headers=headers).json()
+print r
+
+print
+print "/question"
+r = requests.get(url + 'question', headers=headers).json()
+print r

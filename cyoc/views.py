@@ -84,6 +84,8 @@ class SessionView(object):
         current question: {id, prompt, options[{id, label, type}]}
         """
         question = self.scene.current_question
+        if question is None:
+            return {'question': None}
         return {
             'question': {
                 'id': question.id,
