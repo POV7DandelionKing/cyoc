@@ -13,7 +13,7 @@ class Scene(object):
         self.id = id
         self.avatars = avatars
         self.questions = questions
-        self.users = []
+        self.users = set()
         self.responses = {q.id: {} for q in questions}
 
     @classmethod
@@ -32,7 +32,7 @@ class Scene(object):
         for question in self.questions:
             # if there aren't answers from all registered users, then
             # the question is still current
-            if set(self.responses[question.id].keys()) != set(self.users):
+            if set(self.responses[question.id].keys()) != self.users:
                 return question
         return None
 

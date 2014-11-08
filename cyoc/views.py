@@ -21,11 +21,15 @@ def join(request):
     json = request.json_body
     scene = scene_by_id(json['scene'])
     avatar = request.json_body['avatar']
-    if avatar in scene.users:
-        raise JSONError(errors={'avatar': 'in use'})
+
+    # XXX disable this for now, it makes testing harder
+    #
+    # if avatar in scene.users:
+    #     raise JSONError(errors={'avatar': 'in use'})
+
     if avatar not in scene.avatars:
         raise JSONError(errors={'avatar': 'invalid'})
-    scene.users.append(avatar)
+    scene.users.add(avatar)
     return {'token': get_signer().sign('{}.{}'.format(
         scene.id, avatar
         ))}
