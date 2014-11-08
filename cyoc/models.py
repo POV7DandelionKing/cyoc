@@ -40,6 +40,8 @@ scenes = {}
 def scene_by_id(id):
     return scenes[id]
 
+def all_scenes():
+    return scenes.values()
 
 def setup_scene(filename):
     global session

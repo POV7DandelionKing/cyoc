@@ -2,7 +2,7 @@ from pyramid.httpexceptions import HTTPError
 from pyramid.view import view_config
 from .models import (
     scene_by_id,
-    scenes,
+    all_scenes,
     )
 from .errors import (
     JSONError,
@@ -36,12 +36,11 @@ def avatars(request):
     """
     Returns the currently available avatars in scenes
     """
-    scene = scenes[0] # XXX we have only one session right now
-    return {'sessions': [{
-        'id': scene.id,
-        'avatars': [
-            a for a in session.avatars if a not in session.users
-            ]}]
+    return {'sessions': [
+        {'id': scene.id,
+         'avatars': [
+            a for a in scene.avatars if a not in scene.users
+            ]} for scene in all_scenes()]
             }
 
 
