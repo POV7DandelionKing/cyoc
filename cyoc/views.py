@@ -8,13 +8,13 @@ from .errors import (
     JSONError,
     JSONUnauthorized,
     )
-from .sessions import signer
+from .sessions import get_signer
 
 
-@view_config(route_name='join', renderer='json')
+@view_config(route_name='join', request_method='POST', renderer='json')
 def join(request):
     """
-    Takes a avatar id, scene id
+    Takes {"avatar": id, "scene":id}
 
     Returns a token
     """
@@ -26,7 +26,7 @@ def join(request):
     if avatar not in scene.avatars:
         raise JSONError(errors={'avatar': 'invalid'})
     scene.users.append(avatar)
-    return {'token': signer.sign('{}.{}'.format(
+    return {'token': get_signer().sign('{}.{}'.format(
         scene.id, avatar
         ))}
 
@@ -51,21 +51,22 @@ class SessionView(object):
     def __init__(self, context, request):
         self.context = context
         self.request = request
-        self.json = request.json_body
-        token = signer.unsign(self.json['session'])
-        scene_id, user_id = token.split('.')
+        scheme, token = request.authorization
+        creds = get_signer().unsign(token)
+        scene_id, user_id = creds.split('.')
         self.scene = scene_by_id(scene_id)
         self.user = user_id
 
-    @view_config(route_name='respond', renderer='json')
+    @view_config(route_name='respond', request_method='POST', renderer='json')
     def respond(self):
         """
         Takes question id and response id
         """
-        question_id = self.json['question']
-        response_id = self.json['response']
-        self.scene.questions[question_id].responses[self.user] = response_id
-        return {'ok': True}
+        json = self.request.json_body
+        question_id = json['question']
+        response_id = json['response']
+        self.scene.respond(question_id, response_id, self.user)
+        return {'responses': self.scene.responses[question_id]}
 
     @view_config(route_name='responses', renderer='json')
     def responses(self):
