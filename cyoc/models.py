@@ -1,4 +1,6 @@
+import random
 import yaml
+
 
 class TextQuestion(object):
     def __init__(self, id, text, options):
@@ -32,7 +34,17 @@ class Scene(object):
         _answers[self.id][question_id][user_id] = response_id
 
     def responses(self, question_id):
-        return _answers[self.id][question_id]
+        answers = dict(_answers[self.id][question_id])
+
+        # XXX for now we fill in fake responses for users if there
+        # aren't any in the db
+        for avatar in self.avatars:
+            if avatar not in answers:
+                q = self.questions[int(question_id)]
+                user_options = q.options[avatar]
+                option_ids = [str(i) for i in range(len(user_options))]
+                answers[avatar] = random.choice(option_ids)
+        return answers
 
 
 # XXX in memory persistence only right now
