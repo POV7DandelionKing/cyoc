@@ -11,6 +11,8 @@ def main(global_config, **settings):
 
     config = Configurator(settings=settings)
 
+    config.add_route('reset', '/reset')
+
     config.add_route('join', '/join')
     config.add_route('lobby', '/lobby')
 

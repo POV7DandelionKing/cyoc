@@ -14,7 +14,11 @@ class Scene(object):
         self.avatars = avatars
         self.questions = questions
         self.users = set()
-        self.responses = {q.id: {} for q in questions}
+        self.reset()
+
+    def reset(self):
+        self.responses = {q.id: {} for q in self.questions}
+        self.users = set()
 
     @classmethod
     def from_config(cls, config):

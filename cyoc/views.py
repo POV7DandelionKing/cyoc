@@ -11,6 +11,12 @@ from .errors import (
 from .sessions import get_signer
 
 
+@view_config(route_name='reset', renderer='json')
+def reset(request):
+    for scene in all_scenes():
+        scene.reset()
+    return {'OK': True}
+
 @view_config(route_name='join', request_method='POST', renderer='json')
 def join(request):
     """

@@ -8,6 +8,11 @@ import json
 url = 'http://localhost:6543/'
 headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
 
+print
+print "/reset"
+r = requests.get(url + "reset", headers=headers).json()
+print r
+
 print "/lobby"
 r = requests.get(url + 'lobby').json()
 print r
@@ -58,6 +63,17 @@ print
 print "/responses"
 data = {'question': '0'}
 r = requests.post(url + "responses", data=json.dumps(data), headers=headers).json()
+print r
+
+print
+print "/responses"
+data = {'question': '1'}
+r = requests.post(url + "responses", data=json.dumps(data), headers=headers).json()
+print r
+
+print
+print "/reset"
+r = requests.get(url + "reset", headers=headers).json()
 print r
 
 print
