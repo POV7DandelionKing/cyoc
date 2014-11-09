@@ -3,83 +3,83 @@ scene:
   id: basement
 
   avatars:
-    - anxious
-    - angry
-    - insecure
+    - mac
+    - roberta
+    - arlene
 
   questions:
 
     - question: Tell me about yourself
       answers:
-        anxious:
+        mac:
           - I’m divorced.
           - "{Silence}"
           - I’m worried about Watergate.
-        angry:
+        roberta:
           - I’m fine.
           - "{Silence}"
           - I need a wife.
-        insecure:
+        arlene:
           - This weather depresses me.
           - I’m tired of being single. I have so much freedom
           - I’m independent.
 
     - question: Is there no one you feel close to?
       answers:
-        anxious:
+        mac:
           - My kids.
           - I don’t think it’s that important.
           - I want to make a difference.
-        angry:
+        roberta:
           - No.
           - I don’t need friends.
           - I got lot’s.
-        insecure:
+        arlene:
           - People are important to me!
           - "{Silence}"
           - I like my independence.
 
     - question: Whats that really about?
       answers:
-        anxious:
+        mac:
           - I want to connect.
           - Our leaders have betrayed us.
           - I want to live in a better world.
-        angry:
+        roberta:
           - I’m not sure what I’m doing here.
           - "{Silence}"
           - I think I’d make a great Dad.
-        insecure:
+        arlene:
           - I don’t want to talk about it.
           - "{Silence}"
           - My kids are out of control.
 
     - question: Can you drop the mask?
       answers:
-        anxious:
+        mac:
           - I’m really trying!
           - {Silence}
           - Sometimes. you have to be practical.
-        angry:
+        roberta:
           - What you see is what you get.
           - "{Silence}"
           - What if theres nothing underneath?
-        insecure:
+        arlene:
           - What mask?
           - "{Silence}"
           - I’m very genuine!
 
     - question: Isn’t it sad that you feel that way?
       answers:
-        anxious:
+        mac:
           - I wish more people cared.
           - "{Silence}"
           - Yes, it is.
-        angry:
+        roberta:
           - Not really.
           - "{Silence}"
           - The world is a sad place.
-        insecure:
+        arlene:
           - I’ll survive.
           - "{Silence}"
           - It’s going to get better.
