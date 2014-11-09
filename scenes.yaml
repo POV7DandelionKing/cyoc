@@ -13,11 +13,11 @@ scene:
       answers:
         anxious:
           - I’m divorced.
-          - {Silence}
+          - "{Silence}"
           - I’m worried about Watergate.
         angry:
           - I’m fine.
-          - {Silence}
+          - "{Silence}"
           - I need a wife.
         insecure:
           - This weather depresses me.
@@ -36,8 +36,8 @@ scene:
           - I got lot’s.
         insecure:
           - People are important to me!
-          - {Silence}
-          - I like my independence. 
+          - "{Silence}"
+          - I like my independence.
 
     - question: Whats that really about?
       answers:
@@ -47,11 +47,11 @@ scene:
           - I want to live in a better world.
         angry:
           - I’m not sure what I’m doing here.
-          - {Silence}
+          - "{Silence}"
           - I think I’d make a great Dad.
         insecure:
           - I don’t want to talk about it.
-          - {Silence}
+          - "{Silence}"
           - My kids are out of control.
 
     - question: Can you drop the mask?
@@ -62,24 +62,24 @@ scene:
           - Sometimes. you have to be practical.
         angry:
           - What you see is what you get.
-          - {Silence}
+          - "{Silence}"
           - What if theres nothing underneath?
         insecure:
           - What mask?
-          - {Silence}
+          - "{Silence}"
           - I’m very genuine!
 
     - question: Isn’t it sad that you feel that way?
       answers:
         anxious:
           - I wish more people cared.
-          - {Silence} 
+          - "{Silence}"
           - Yes, it is.
         angry:
           - Not really.
-          - {Silence}
+          - "{Silence}"
           - The world is a sad place.
         insecure:
           - I’ll survive.
-          - {Silence}
+          - "{Silence}"
           - It’s going to get better.
