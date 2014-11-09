@@ -85,9 +85,13 @@ class SessionView(object):
 
     def _responses(self, question_id):
         r = []
+        responded = set()
         for user_id, response_id in self.scene.responses[question_id].items():
             options = self.scene.questions[int(question_id)].options[user_id]
-            r = {'user': user_id, 'response':options[int(response_id)]}
+            r.append({'user': user_id, 'response':options[int(response_id)]})
+            responded.add(user_id)
+        for user_id in self.scene.users - responded:
+            r.append({'user': user_id, 'response': None})
         return {'responses': r}
 
     @view_config(route_name='question', renderer='json')

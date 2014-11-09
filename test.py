@@ -14,6 +14,12 @@ print r
 
 print
 print "/join"
+data = {'scene':'basement', 'avatar':'angry'}
+r = requests.post(url + 'join', data=json.dumps(data), headers=headers).json()
+print r
+
+print
+print "/join"
 data = {'scene':'basement', 'avatar':'anxious'}
 r = requests.post(url + 'join', data=json.dumps(data), headers=headers).json()
 print r
