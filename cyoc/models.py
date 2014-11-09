@@ -29,12 +29,19 @@ class Scene(object):
 
     @property
     def current_question(self):
+        # for now we go on after a single response, rather than
+        # waiting for all of them
         for question in self.questions:
-            # if there aren't answers from all registered users, then
-            # the question is still current
-            if set(self.responses[question.id].keys()) != self.users:
+            if not self.responses[question.id].keys():
                 return question
         return None
+
+        # for question in self.questions:
+        #     # if there aren't answers from all registered users, then
+        #     # the question is still current
+        #     if set(self.responses[question.id].keys()) != self.users:
+        #         return question
+        # return None
 
     def respond(self, question_id, response_id, user_id):
         self.responses[question_id][user_id] = response_id
