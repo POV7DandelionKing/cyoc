@@ -13,12 +13,9 @@ class Scene(object):
         self.id = id
         self.avatars = avatars
         self.questions = questions
-        self.users = set()
-        self.reset()
-
-    def reset(self):
-        self.responses = {q.id: {} for q in self.questions}
-        self.users = set()
+        _answers[self.id] = {}
+        for question in self.questions:
+            _answers[self.id][question.id] = {}
 
     @classmethod
     def from_config(cls, config):
@@ -31,39 +28,25 @@ class Scene(object):
             ]
         return cls(id, avatars, questions)
 
-    @property
-    def current_question(self):
-        # for now we go on after a single response, rather than
-        # waiting for all of them
-        for question in self.questions:
-            if not self.responses[question.id].keys():
-                return question
-        return None
-
-        # for question in self.questions:
-        #     # if there aren't answers from all registered users, then
-        #     # the question is still current
-        #     if set(self.responses[question.id].keys()) != self.users:
-        #         return question
-        # return None
-
     def respond(self, question_id, response_id, user_id):
-        self.responses[question_id][user_id] = response_id
+        _answers[self.id][question_id][user_id] = response_id
+
+    def responses(self, question_id):
+        return _answers[self.id][question_id]
 
 
 # XXX in memory persistence only right now
-scenes = {}
-
+_scenes = {}
+_answers = {}
 
 def scene_by_id(id):
-    return scenes[id]
+    return _scenes[id]
 
 def all_scenes():
-    return scenes.values()
+    return _scenes.values()
 
 def setup_scene(filename):
-    global session
     with open(filename) as f:
         config = yaml.load(f)
         scene = Scene.from_config(config)
-        scenes[scene.id] = scene
+        _scenes[scene.id] = scene

@@ -11,14 +11,11 @@ def main(global_config, **settings):
 
     config = Configurator(settings=settings)
 
-    config.add_route('reset', '/reset')
-
     config.add_route('join', '/join')
     config.add_route('lobby', '/lobby')
 
     config.add_route('respond', '/respond')
-    config.add_route('responses', '/responses')
-    config.add_route('question', '/question')
+    config.add_route('start', '/start')
 
     config.scan()
     return config.make_wsgi_app()

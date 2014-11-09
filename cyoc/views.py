@@ -11,12 +11,6 @@ from .errors import (
 from .sessions import get_signer
 
 
-@view_config(route_name='reset', renderer='json')
-def reset(request):
-    for scene in all_scenes():
-        scene.reset()
-    return {'OK': True}
-
 @view_config(route_name='join', request_method='POST', renderer='json')
 def join(request):
     """
@@ -28,14 +22,8 @@ def join(request):
     scene = scene_by_id(json['scene'])
     avatar = request.json_body['avatar']
 
-    # XXX disable this for now, it makes testing harder
-    #
-    # if avatar in scene.users:
-    #     raise JSONError(errors={'avatar': 'in use'})
-
     if avatar not in scene.avatars:
         raise JSONError(errors={'avatar': 'invalid'})
-    scene.users.add(avatar)
     return {'token': get_signer().sign('{}.{}'.format(
         scene.id, avatar
         ))}
@@ -46,15 +34,13 @@ def avatars(request):
     """
     Returns the currently available avatars in scenes
     """
-    return {'sessions': [
+    return {'scenes': [
         {'id': scene.id,
-         'avatars': [
-            a for a in scene.avatars if a not in scene.users
-            ]} for scene in all_scenes()]
-            }
+         'avatars': [a for a in scene.avatars]} for scene in all_scenes()
+        ]}
 
 
-class SessionView(object):
+class SceneView(object):
     """
     Add views require a token
     """
@@ -67,46 +53,41 @@ class SessionView(object):
         self.scene = scene_by_id(scene_id)
         self.user = user_id
 
+    @view_config(route_name='start', renderer='json')
+    def start(self):
+        return self._next_question()
+
     @view_config(route_name='respond', request_method='POST', renderer='json')
     def respond(self):
         """
         Takes question id and response id
+
+        Returns responses and next question
         """
         json = self.request.json_body
         question_id = json['question']
         response_id = json['response']
         self.scene.respond(question_id, response_id, self.user)
-        return self._responses(question_id)
-
-    @view_config(route_name='responses', request_method='POST', renderer='json')
-    def responses(self):
-        """
-        Takes a question id
-
-        Responses {user id -> response id}
-        """
-        json = self.request.json_body
-        question_id = json['question']
-        return self._responses(question_id)
+        d = self._responses(question_id)
+        d['next-question'] = self._next_question(question_id)['question']
+        return d
 
     def _responses(self, question_id):
         r = []
-        responded = set()
-        for user_id, response_id in self.scene.responses[question_id].items():
+        for user_id, response_id in self.scene.responses(question_id).items():
             options = self.scene.questions[int(question_id)].options[user_id]
             r.append({'user': user_id, 'response':options[int(response_id)]})
-            responded.add(user_id)
-        for user_id in self.scene.users - responded:
-            r.append({'user': user_id, 'response': None})
         return {'responses': r}
 
-    @view_config(route_name='question', renderer='json')
-    def question(self):
-        """
-        current question: {id, prompt, options[{id, label, type}]}
-        """
-        question = self.scene.current_question
-        if question is None:
+    def _next_question(self, question_id=None):
+        if question_id is None:
+            i = 0
+        else:
+            i = int(question_id)
+            i += 1
+        try:
+            question = self.scene.questions[i]
+        except IndexError:
             return {'question': None}
         return {
             'question': {
