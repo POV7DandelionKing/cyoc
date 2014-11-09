@@ -33,13 +33,13 @@ scene:
         roberta:
           - No.
           - I don’t need friends.
-          - I got lot’s.
+          - I got lots.
         arlene:
           - People are important to me!
           - "{Silence}"
           - I like my independence.
 
-    - question: Whats that really about?
+    - question: What’s that really about?
       answers:
         mac:
           - I want to connect.
