@@ -44,7 +44,7 @@ scene:
         mac:
           - I want to connect.
           - Our leaders have betrayed us.
-          - I want to live in a better world.
+          - "{Shake device to groan}"
         roberta:
           - I’m not sure what I’m doing here.
           - "{Silence}"
